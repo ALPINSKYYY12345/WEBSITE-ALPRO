@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dompet Mahasiswa | Kelola Keuangan</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="brand">💸 Dompet<span>Mahasiswa</span></div>
+    <p class="menu-label">MENU UTAMA</p>
+    <a class="active" href="#dashboard">▦ &nbsp; Dashboard</a>
+    <a href="#tambah">＋ &nbsp; Tambah Transaksi</a>
+    <a href="#riwayat">▤ &nbsp; Riwayat Transaksi</a>
+    
+    <!-- Tombol Logout -->
+    <a href="/logout" style="color: #ee6c7a; margin-top: auto;">🚪 &nbsp; Keluar / Logout</a>
+
+    <div class="sidebar-bottom">Halo, <strong>{{ username }}</strong> 👋<br>Kelola uang saku dengan bijak ✨</div>
+  </aside>
+  
+  <!-- Main Content -->
+  <main>
+    <!-- Section Dashboard -->
+    <section id="dashboard" class="page-section">
+      <header>
+        <div>
+          <p class="eyebrow">FINANCIAL OVERVIEW</p>
+          <h1>Dashboard Keuangan</h1>
+          <p class="muted">Pantau uang masuk dan keluar dengan mudah.</p>
+        </div>
+        <span class="user">🎓 {{ username }}</span>
+      </header>
+      
+      <div class="hero">
+        <div>
+          <p>Selamat datang di Dompet Mahasiswa 👋</p>
+          <h2>Atur keuangan, raih tujuanmu.</h2>
+          <span>Catat setiap transaksi untuk hidup lebih hemat dan terencana.</span>
+        </div>
+        <div class="hero-emoji">💰</div>
+      </div>
+      
+      <div class="stats">
+        <article class="stat">
+          <span>💳 Total Saldo</span>
+          <h2 id="saldo">Rp0</h2>
+          <small>Saldo saat ini</small>
+        </article>
+        <article class="stat">
+          <span>↗ Total Pemasukan</span>
+          <h2 id="pemasukan">Rp0</h2>
+          <small>Seluruh transaksi masuk</small>
+        </article>
+        <article class="stat">
+          <span>↘ Total Pengeluaran</span>
+          <h2 id="pengeluaran">Rp0</h2>
+          <small>Seluruh transaksi keluar</small>
+        </article>
+      </div>
+
+      <div class="two-col">
+        <!-- Form Tambah Transaksi -->
+        <article class="panel" id="tambah">
+          <h3>＋ Tambah Transaksi</h3>
+          <p class="muted">Masukkan data transaksi baru</p>
+
+          <form id="form-transaksi">
+            <label for="jenis">Jenis Transaksi
+              <select id="jenis" name="jenis" required>
+                <option value="pengeluaran">Pengeluaran</option>
+                <option value="pemasukan">Pemasukan</option>
+              </select>
+            </label>
+            
+            <label for="jumlah">Jumlah (Rp)
+              <input id="jumlah" name="jumlah" type="number" min="1" step="1" placeholder="Contoh: 25000" required>
+            </label>
+            
+            <label for="kategori">Kategori
+              <select id="kategori" name="kategori" required>
+                <!-- Diisi secara dinamis melalui script.js -->
+              </select>
+            </label>
+            
+            <label for="keterangan">Keterangan
+              <input id="keterangan" name="keterangan" maxlength="150" placeholder="Contoh: Makan siang" required>
+            </label>
+            
+            <label for="tanggal">Tanggal
+              <input id="tanggal" name="tanggal" type="date" required>
+            </label>
+            
+            <button type="submit">＋ Simpan Transaksi</button>
+          </form>
+        </article>
+
+        <!-- Grafik Keuangan -->
+        <article class="panel">
+          <h3>📊 Grafik Keuangan</h3>
+          <p class="muted">Perbandingan sisa saldo dan pengeluaran</p>
+          <div class="chart-wrap">
+            <canvas id="grafik"></canvas>
+          </div>
+          
+          <div class="chart-actions" id="group-tipe-grafik">
+            <button type="button" class="btn-chart-type active" data-type="doughnut">Doughnut</button>
+            <button type="button" class="btn-chart-type" data-type="pie">Pie</button>
+            <button type="button" class="btn-chart-type" data-type="bar">Bar</button>
+            <button type="button" class="btn-chart-type" data-type="line">Line</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section Riwayat Transaksi -->
+    <section id="riwayat" class="page-section">
+      <article class="panel">
+        <div class="history-head">
+          <div>
+            <h3>▤ Riwayat Transaksi</h3>
+            <p class="muted">Daftar pencatatan keuangan Anda</p>
+          </div>
+          
+          <div class="filter-group">
+            <select id="filter-bulan">
+              <option value="semua">Semua Bulan</option>
+              <option value="01">Januari</option>
+              <option value="02">Februari</option>
+              <option value="03">Maret</option>
+              <option value="04">April</option>
+              <option value="05">Mei</option>
+              <option value="06">Juni</option>
+              <option value="07">Juli</option>
+              <option value="08">Agustus</option>
+              <option value="09">September</option>
+              <option value="10">Oktober</option>
+              <option value="11">November</option>
+              <option value="12">Desember</option>
+            </select>
+
+            <select id="filter-tahun">
+              <option value="semua">Semua Tahun</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+            </select>
+
+            <select id="filter">
+              <option value="semua">Semua Jenis</option>
+              <option value="pemasukan">Pemasukan</option>
+              <option value="pengeluaran">Pengeluaran</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+                <th>Kategori</th>
+                <th>Jenis</th>
+                <th>Jumlah</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="daftar">
+              <!-- Data transaksi dirender dari script.js -->
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Dompet Mahasiswa. All rights reserved.</p>
+    </footer>
+  </main>
+</body>
+</html>

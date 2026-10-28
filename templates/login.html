@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Dompet Mahasiswa</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .card-auth { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 360px; }
+  </style>
+</head>
+<body>
+  <div class="card-auth">
+    <h2>🔑 Login</h2>
+    <p class="muted">Masuk ke akun Dompet Mahasiswa Anda</p>
+    
+    {% if error %}
+      <p style="color: red; font-size: 13px;">{{ error }}</p>
+    {% endif %}
+
+    <form action="/login" method="POST">
+      <label>Username / Email Bebas
+        <input type="text" name="username" placeholder="Contoh: mahasiswa1" required>
+      </label>
+      <label>Password
+        <input type="password" name="password" placeholder="Masukkan password" required>
+      </label>
+      <button type="submit" style="margin-top: 10px;">Masuk</button>
+    </form>
+    <p style="font-size: 12px; margin-top: 15px;">Belum punya akun? <a href="/register">Daftar di sini</a></p>
+  </div>
+</body>
+</html> 
