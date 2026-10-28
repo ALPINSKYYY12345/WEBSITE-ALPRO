@@ -1,3 +1,4 @@
+import os
 import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -5,7 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = 'kunci_rahasia_dompet_mahasiswa'
 
-DB_FILE = "database.db"
+# Perbaikan path database untuk Vercel Serverless
+DB_FILE = "/tmp/database.db" if os.path.exists("/tmp") else "database.db"
 
 def get_db():
     conn = sqlite3.connect(DB_FILE)
