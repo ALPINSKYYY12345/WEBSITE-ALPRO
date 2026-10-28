@@ -4,7 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dompet Mahasiswa | Kelola Keuangan</title>
+  
+  <!-- CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  
+  <!-- CDN Chart.js (Wajib ada agar grafik muncul) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- JavaScript Aplikasi -->
   <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 <body>
@@ -17,7 +24,7 @@
     <a href="#riwayat">▤ &nbsp; Riwayat Transaksi</a>
     <div class="sidebar-bottom">Kelola uang saku dengan bijak ✨</div>
   </aside>
-  
+
   <!-- Main Content -->
   <main>
     <!-- Section Dashboard -->
@@ -30,7 +37,7 @@
         </div>
         <span class="user">🎓 Mahasiswa</span>
       </header>
-      
+
       <div class="hero">
         <div>
           <p>Selamat datang di Dompet Mahasiswa 👋</p>
@@ -39,7 +46,7 @@
         </div>
         <div class="hero-emoji">💰</div>
       </div>
-      
+
       <div class="stats">
         <article class="stat">
           <span>💳 Total Saldo</span>
@@ -71,25 +78,25 @@
                 <option value="pemasukan">Pemasukan</option>
               </select>
             </label>
-            
+
             <label for="jumlah">Jumlah (Rp)
               <input id="jumlah" name="jumlah" type="number" min="1" step="1" placeholder="Contoh: 25000" required>
             </label>
-            
+
             <label for="kategori">Kategori
               <select id="kategori" name="kategori" required>
                 <!-- Diisi secara dinamis melalui script.js -->
               </select>
             </label>
-            
+
             <label for="keterangan">Keterangan
               <input id="keterangan" name="keterangan" maxlength="150" placeholder="Contoh: Makan siang" required>
             </label>
-            
+
             <label for="tanggal">Tanggal
               <input id="tanggal" name="tanggal" type="date" required>
             </label>
-            
+
             <button type="submit">＋ Simpan Transaksi</button>
           </form>
         </article>
@@ -101,7 +108,7 @@
           <div class="chart-wrap">
             <canvas id="grafik"></canvas>
           </div>
-          
+
           <div class="chart-actions" id="group-tipe-grafik">
             <button type="button" class="btn-chart-type active" data-type="doughnut">Doughnut</button>
             <button type="button" class="btn-chart-type" data-type="pie">Pie</button>
@@ -120,7 +127,7 @@
             <h3>▤ Riwayat Transaksi</h3>
             <p class="muted">Daftar pencatatan keuangan Anda</p>
           </div>
-          
+
           <div class="filter-group">
             <select id="filter-bulan">
               <option value="semua">Semua Bulan</option>
